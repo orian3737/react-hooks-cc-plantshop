@@ -10,19 +10,33 @@ function PlantPage() {
   useEffect(() => {
     fetch("http://localhost:6001/plants")
       .then(response => response.json())
-      .then(data => setPlants(data));
+      .then(data => {
+        const formattedData = data.map(plant => ({
+          ...plant,
+          price: plant.price.toString() // Ensure price is formatted as a string
+        }));
+        setPlants(formattedData);
+      });
   }, []);
 
   const addNewPlant = (newPlant) => {
+    const formattedPlant = {
+      ...newPlant,
+      price: parseFloat(newPlant.price).toString() 
+    };
+
     fetch("http://localhost:6001/plants", {
       method: "POST",
       headers: {
         "Content-Type": "Application/JSON"
       },
-      body: JSON.stringify(newPlant)
+      body: JSON.stringify(formattedPlant)
     })
     .then(response => response.json())
-    .then(plant => setPlants([...plants, plant]));
+    .then(plant => {
+      plant.price = plant.price.toString();
+      setPlants([...plants, plant]);
+    });
   };
 
   const updateSearchTerm = (term) => {

@@ -11,3 +11,4 @@ function PlantList({ plants, searchTerm }) {
 }
 
 export default PlantList;
+

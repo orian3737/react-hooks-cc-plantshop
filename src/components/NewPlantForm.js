@@ -16,7 +16,7 @@ function NewPlantForm({ addNewPlant }) {
     event.preventDefault();
     const plantData = {
       ...formData,
-      price: parseFloat(formData.price)
+      price: parseFloat(formData.price).toString() // Ensure price is formatted as a string
     };
     addNewPlant(plantData);
     setFormData({ name: "", image: "", price: "" });
